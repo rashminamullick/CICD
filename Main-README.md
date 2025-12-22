@@ -256,6 +256,6 @@ My goal is to make delivery *boring* in the best possible way — predictable, s
 Job 3 completes the pipeline by safely delivering approved work to customers. By automating this final step, the business gains speed, reliability, and confidence, while reducing risk and operational stress.
 
 #### Job 3 Final Results as Console Output:
-![alt text](<image/job3image8 - Copy.png>)
+![alt text](<image/job3image6 - Copy.png>)
 #### Open in Browser:
 ![alt text](<image/job3image12 - Copy.png>)
