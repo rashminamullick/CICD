@@ -40,11 +40,11 @@ Back on local machine
 Run a process called ‘ssh agent’ (it will only exist in this terminal, if we open a new Bash it will not exist there, so carry on in same terminal)  
    * eval `ssh-agent -s` 
    * pid = process ID
-  ![alt text](../image/image6.png)
+  ![alt text](image/sshimage2.png)
 
 * Showing an error no such file found as per the above picture:
   * Step I did go to the powershell and try to check if my SSH is running:
-* ![alt text](../image/image5.png)
+* ![alt text](image/sshimage3.png)
   
 * Now that we have the ssh agent process running, we add our key to it – we will use ssh add command and the private key after it 
    * ssh-add private-key-name
@@ -70,4 +70,4 @@ Do a git clone - take the SSH endpoint for the Git repo Go over where we have al
 
 # test-ssh
 line to test git push
-![alt text](../image/image8.png)
+![alt text](image/sshimage1.png)
