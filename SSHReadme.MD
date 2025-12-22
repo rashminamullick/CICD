@@ -25,14 +25,13 @@ We will put the public key on what needs to be locked on GitHub à add padlock o
 – open Bash window
 - Cd into ssh - Paste command in ssh-keygen -t rsa -b 4096 -C rashminamullick@gmail.com
 - Name it rashmina-github-key
-- ![alt text](../image/image7.png)
-- 
-- Enter x 2
+- - Enter x 2
 - ls to check ->
+- ![alt text](image/sshimage4.png)
 2. go over to GitHub and register the padlock –
 3. click on the right picture – settings -
 - fill in name
-- in Bash – cat carla-github-key.pub to the Bash screen – make sure no extra characters are copied
+- in Bash – cat rashmina-github-key.pub to the Bash screen – make sure no extra characters are copied
 - paste it in the github window and click add ssh key
 gives read and write access to all repositories on GitHub.
 4. Add private key to ssh register
