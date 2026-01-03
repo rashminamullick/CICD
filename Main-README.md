@@ -1,261 +1,224 @@
-# CICD
-# Git + SSH + CI/CD Preparation
+### CI/CD Pipeline – Jenkins, GitHub & AWS EC2
+#### Overview
+This document explains how I designed, built, and tested a complete CI/CD pipeline using GitHub, Jenkins, and AWS EC2.
+The pipeline automates the full journey from a code change to a live deployment, removing manual steps and reducing risk.
+
+### CI/CD Pipeline Diagram
+
 ![alt text](<image/CICD Pipeline picture.png>)
-* Why this was done
 
-* This setup was created to prepare the application for a real CI/CD pipeline using Jenkins.
-* Instead of manually copying files, running tests by hand, or deploying code directly, the goal was to automate the full process from code change to deployment.
+#### What this diagram shows
+* Code is written and committed locally
+* Changes are pushed to GitHub
+* A webhook automatically triggers Jenkins
+* Jenkins runs three jobs:
+     * Job 1: Test code (CI)
+     * Job 2: Merge dev → main (CI)
+     * Job 3: Deploy to EC2 (CD)
+* The application is deployed to a live EC2 instance
 
-* GitHub was used as the single source of truth, and SSH authentication was set up so Jenkins can securely access the repository without using passwords or personal credentials.
+This separation ensures quality, safety, and reliability at every stage.
 
-* This approach reflects how modern software teams work in industry, where automation, security, and reliability are essential.
+### Why This CI/CD Pipeline Was Set Up
+This setup was created to prepare the application for a real-world CI/CD workflow.
+#### Instead of:
+* Manually copying files
+* Running tests by hand
+* Deploying directly to a server
+The goal was to:
+* Automate testing
+* Control merging
+* Automate deployment
 
-## Benefits of doing it this way
-1. Automation and consistency
+GitHub acts as the source, while Jenkins securely accesses the repository using SSH authentication, without passwords or personal credentials.
 
-* By committing only the application source code and excluding node_modules, Jenkins can install dependencies fresh on every run.
-### This ensures:
+#### Benefits of This Approach
+1. Automation and Consistency: 
+By committing only the application source code and excluding node_modules, Jenkins installs dependencies fresh on every run.
 
+#### This ensures:
 * The same process runs every time
-
-* No “works on my machine” problems
-
 * Fewer human errors
 
-2. Strong security
+Strong Security: 
+SSH keys are used instead of usernames and passwords.
 
-* SSH keys were used instead of usernames and passwords.
-* This means:
+* No credentials are stored in scripts.
+* Access can be revoked instantly if needed.
+* Jenkins can authenticate securely and independently.
 
-  * No credentials are stored in scripts
-
-  * Access can be revoked instantly if needed
-
-  * Jenkins can authenticate securely and independently
-
-1. Clean and professional repository
-
-* The repository contains:
-
-  * Only source code
-
-  * Configuration files
-
+Clean and Professional Repository
+The repository contains:
+* Source code only
+* Configuration files
 * Tests
 
-  * Large or sensitive files are excluded.
-* This keeps the repository:
+Large or sensitive files are excluded, keeping the repository:
+* Lightweight
+* Secure
+* Easy to maintain
 
-  * Lightweight
+1. Early Detection of Problems: 
+Automated tests run before any merge or deployment.
 
-  * Secure
-
-  * Easy to maintain
-
-1. Early detection of problems
-
-* Because the application includes test files, Jenkins can run tests automatically before deployment.
 This allows issues to be caught early, before broken code reaches production.
 
-* Problems and challenges faced
-2. SSH configuration complexity
+#### Problems and Challenges Faced
+##### SSH Configuration Complexity
+Setting up SSH authentication required careful handling of:
+* Key generation
+* Jenkins credentials
+* SSH agent configuration
+* GitHub key registration
 
-* Setting up SSH authentication required careful handling of:
+Although challenging at first, this setup significantly improves security and automation once completed.
 
-  * Key generation
-
-  * SSH agent configuration
-
-  * GitHub key registration
-
-  * SSH config files
-
-
-## Business value and future value
-1. Saves time and money
-
-* Automation reduces:
-
+#### Business Value and Future Value
+### Saves Time and Money
+Automation reduces:
 * Manual testing time
-
 * Manual deployment errors
-
 * Developer effort
 
-* This allows teams to focus on building features instead of fixing avoidable issues.
+This allows teams to focus on building features instead of fixing avoidable issues.
 
-2. Improves reliability
-
-* Automated testing and controlled deployment reduce the risk of:
-
+### Improves Reliability
+Automated testing and controlled deployment reduce the risk of:
 * Broken releases
-
 * Downtime
-
 * Customer-facing issues
+Reliable systems protect business reputation.
 
-* Reliable systems protect business reputation.
+### Scales With Team Growth
+Manual processes do not scale well.
 
-3. Scales with team growth
+#### This setup allows:
+* Multiple developers to work safely
+* Jenkins to handle builds and deployments
+* Consistent quality regardless of team size
 
-* As teams grow, manual processes do not scale.
-* This setup allows:
+#### Industry-Ready Skills
+This pipeline demonstrates practical skills in:
+* Git and GitHub
+* Secure authentication
+* CI/CD concepts
+* Jenkins automation
+* Cloud deployment practices
 
-  * Multiple developers to work safely
+#### Job 3 – Continuous Deployment (CD)
+### Overview
+* Job 3 is the Continuous Deployment stage of the pipeline.
+* Its purpose is to deliver a version of the application that is already known to work into the live environment safely and reliably.
+* Job 3 does not test or merge code — it only deploys approved changes.
 
-  * Jenkins to handle builds and deployments automatically
 
-  * Consistent quality regardless of team size
+#### What Job 3 Does
 
-1. Industry-ready skills
+### Job 3:
 
-* This approach mirrors real DevOps workflows used in companies.
-  * It demonstrates skills in:
-
-  * Git and GitHub
-
-  * Secure authentication
-
-  * CI/CD concepts
-
-  * Jenkins automation
-
-  * Cloud-ready deployment practices
-
-# Job 3 – Continuous Delivery (CD) Deployment
-
-## Overview
-
-This document explains **Job 3**, the *Continuous Delivery (CD)* stage of the pipeline. The focus of this job is the **final delivery of approved changes to the live environment** in a way that is safe, repeatable, and reliable.
-
-The purpose of Job 3 is **not** to build or test the application, but to **deliver a version that is already known to work** into production with minimal risk and minimal disruption.
-
----
-
-## What Job 3 Does
-
-Job 3 is responsible for:
-
-* Taking a fully tested and approved version of the application
-* Delivering it to a live EC2 instance
-* Restarting the application safely so users see the update
-* Doing this **automatically and consistently**, without manual steps
-
-This job runs **only after Job 2 completes successfully**, ensuring that unfinished or broken work can never reach customers.
-
----
-
-## Why Job 3 Is Important
-
-In many organisations, the final delivery step is where most problems happen. It often:
-
-* Relies on manual actions
-* Depends on one person knowing the correct steps
-* Causes stress during releases
-* Increases the risk of outages and mistakes
-
-Job 3 removes these risks by turning delivery into a **routine, predictable process**.
-
----
-
-## Business Problems Solved
-
-### Reducing Release Stress
-
-Releasing updates no longer feels like a high-risk event. The process is automatic and repeatable, so the business can release changes with confidence.
-
-### Eliminating Bottlenecks
-
-The delivery process does not depend on a single person being available. The knowledge is built into the system itself.
-
-### Protecting Live Services
-
-Only work that has already been tested and approved is allowed to go live, reducing the chance of outages or customer impact.
-
----
-
-## Business Benefits
-
-### Speed
-
-Updates can reach customers much faster. Once work is ready, it can be delivered without delay.
-
-### Reliability
-
-The same steps happen every time, which makes the outcome predictable and reduces human error.
-
-### Reduced Risk
-
-Manual mistakes are removed from the process, protecting the company’s reputation and service availability.
-
-### Business Continuity
-
-The delivery process is documented and automated, so it remains within the business even if team members change.
-
----
-
-## How Job 3 Fits Into the Pipeline
-
-* **Job 1** checks new changes
-* **Job 2** confirms the changes are ready
-* **Job 3** delivers those approved changes to users
 ![alt text](image/job2image9.png)
-This separation ensures that delivery is safe and controlled.
 
----
+* Takes a tested and approved version of the application
+* Deploys it to an AWS EC2 instance
+* Restarts the application safely
+* Runs automatically with no manual steps
 
-## Security and Safety Considerations
+This job runs only after Job 2 completes successfully, ensuring unfinished work never reaches users.
 
-* Secure access is used to connect to the live environment
-* No direct changes are made manually on the production server
-* Only approved pipeline jobs are allowed to deploy
+### How Job 3 Fits Into the Pipeline
+* Job 1 tests new changes
+* Job 2 merges approved changes
+* Job 3 deploys those changes to users
+  
+This separation ensures delivery is safe and controlled.
 
-This approach reduces risk and keeps the live environment stable.
 
----
+#### Security and Safety Considerations
+* Secure SSH access is used for deployment
+* No manual changes are made on the production server
+* Only Jenkins is allowed to deploy code
+  
+This keeps the live environment stable and protected.
 
-## Evidence of Success
+#### Evidence of Successful Deployment
+### Jenkins Console Output (Job 3)
 
-The success of Job 3 is confirmed by:
-
-* A successful pipeline run
-* The application running correctly after deployment
-* Users being able to access the updated service
-
-*(Screenshot placeholders can be added here)*
-
----
-
-## Why This Matters to the Business
-
-Job 3 ensures that:
-
-* Updates can be released safely
-* Downtime is minimised
-* Teams can move faster without increasing risk
-* The business can scale without relying on manual processes
-
-The result is a **calm, predictable delivery process** that supports growth rather than slowing it down.
-
----
-
-## Personal Reflection
-
-This task demonstrates my ability to:
-
-* Take ownership of the delivery stage
-* Think beyond technical tasks and focus on business impact
-* Build systems that are safe, reliable, and easy to operate
-
-My goal is to make delivery *boring* in the best possible way — predictable, stress-free, and safe for both the business and its customers.
-
----
-
-## Conclusion
-
-Job 3 completes the pipeline by safely delivering approved work to customers. By automating this final step, the business gains speed, reliability, and confidence, while reducing risk and operational stress.
-
-#### Job 3 Final Results as Console Output:
 ![alt text](<image/job3image6 - Copy.png>)
-#### Open in Browser:
+
+The console output confirms:
+   * SSH agent started successfully
+   * Correct EC2 credentials were used
+   * Deployment commands ran without errors
+
+#### Live Application Running
+After deployment, the application is accessible via the EC2 public IP on port 3000.
+
 ![alt text](<image/job3image12 - Copy.png>)
+
+##### The page displays:
+   “Welcome to the Sparta Test App”
+   “The app is running correctly.”
+
+#### Testing Deployment Reliability
+To ensure reliability, I tested the deployment process multiple times.
+  Each time:
+   * A change was made on the dev branch
+  * The pipeline triggered automatically
+  * Jenkins redeployed the application
+  * The updated content appeared on the live front page
+
+The final screenshot represents the confirmed deployed state after multiple successful redeployments.
+
+
+#### Why Job 3 Matters to the Business
+Job 3 ensures that:
+  * Updates can be released safely
+  * Downtime is minimised
+  * Releases are predictable
+  * Delivery does not depend on one person
+
+The result is a calm, repeatable deployment process that supports growth.
+
+#### Personal Reflection
+This task demonstrates my ability to:
+* Take ownership of the delivery stage
+* Design systems with both technical and business impact in mind
+* Build automation that is reliable and secure.
+
+### Conclusion
+* This CI/CD pipeline automates the entire process from code change to live deployment.
+* By separating testing, merging, and deployment into clear stages, the system delivers speed, reliability, and confidence for both developers and the business.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
