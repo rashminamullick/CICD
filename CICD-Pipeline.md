@@ -29,7 +29,7 @@ Detailed configuration steps, commands, and screenshots are documented in the in
 
 ### CI/CD Pipeline Diagram
 
-![alt text](<image/CICD Pipeline picture.png>)
+![alt text](pipeline-image/pipeline.png)
 
 #### What this diagram shows
 * Code is written and committed locally
