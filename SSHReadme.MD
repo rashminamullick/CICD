@@ -32,14 +32,15 @@ When a git push happens:
  * Access is granted securely
 
 #### Step 1 — Create an SSH Key Pair (RSA 4096-bit)
-An RSA key pair was generated locally using Git Bash.
+An RSA key pair was generated locally using Git Bash. Although newer algorithms such as Ed25519 exist, RSA 4096 remains widely supported and compatible with Jenkins and GitHub.
+
   * Algorithm: RSA
   * Key size: 4096 bits
   * This provides strong encryption suitable for real-world use
 
 After generation, the .ssh directory contained the new key files.
 
-![alt text](image/sshimage4.png)
+![alt text](ssh-image/ssh-key-created.png)
 
 Image 1 – SSH keys created in .ssh folder
 #### Use the screenshot showing the .ssh directory listing with:
@@ -59,7 +60,7 @@ This registers the “padlock” on GitHub, allowing SSH access to repositories.
 * Initially, when trying to add the key in Git Bash, I encountered an error:
    “Could not open a connection to the authentication agent”
 
-![alt text](image/sshimage2.png)
+![alt text](ssh-image/ssh-agent-error.png)
 
 * This happened because the SSH agent service was not running on Windows.
 
@@ -74,7 +75,7 @@ This registers the “padlock” on GitHub, allowing SSH access to repositories.
 * Get-Service ssh-agent
 * Status: Running
 
-![alt text](image/sshimage3.png)
+![alt text](ssh-image/ssh-agent-running.png)
 
 * This fixed the authentication agent problem.
 
@@ -99,7 +100,7 @@ This registers the “padlock” on GitHub, allowing SSH access to repositories.
   * Successfully pushed using SSH
 * This confirmed end-to-end SSH authentication.
 
-![alt text](image/sshimage1.png)
+![alt text](ssh-image/github-ssh-push-success.png)
 
 * Image above – GitHub test repository showing pushed change
 * Repository name test-ssh
@@ -107,12 +108,12 @@ This registers the “padlock” on GitHub, allowing SSH access to repositories.
 * Commit visible on GitHub
 
 #### Outcome
-### After completing these steps:
+#### After completing these steps:
 * SSH authentication worked without passwords.
 * Git push and pull operations succeeded securely.
 * The setup became suitable for Jenkins and CI/CD automation.
 
-### Why This Matters for CI/CD
+#### Why This Matters for CI/CD
 * This SSH setup enables:
     * Jenkins to access GitHub securely.
     * No credentials stored in pipeline scripts.

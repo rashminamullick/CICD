@@ -1,7 +1,31 @@
+# CI/CD Pipeline Documentation
+
+This repository contains detailed documentation for each stage of the CI/CD pipeline:
+
+## Table of Contents
+- [Overview](#overview)
+- [CI/CD Pipeline Diagram](#cicd-pipeline-diagram)
+- [Why This Pipeline Was Set Up](#why-this-cicd-pipeline-was-set-up)
+- [Benefits of This Approach](#benefits-of-this-approach)
+- [Business Value](#business-value-and-future-value)
+- [Job 3 – Continuous Deployment](#job-3--continuous-deployment-cd)
+- [Conclusion](#conclusion)
+
+
+- [Job 1 – Continuous Integration (CI)](Job1_rashmina_ci-test.md)
+- [Job 2 – Merge dev → main (CI)](Job2-ci-merge.md)
+- [Job 3 – Continuous Deployment (CD)](Job3-cd-deploy.md)
+- [SSH Authentication with GitHub](SSHReadme.MD)
+
+
 ### CI/CD Pipeline – Jenkins, GitHub & AWS EC2
 #### Overview
 This document explains how I designed, built, and tested a complete CI/CD pipeline using GitHub, Jenkins, and AWS EC2.
 The pipeline automates the full journey from a code change to a live deployment, removing manual steps and reducing risk.
+
+### This README provides a high-level overview of the CI/CD pipeline. 
+Detailed configuration steps, commands, and screenshots are documented in the individual Job Markdown files linked above.
+
 
 ### CI/CD Pipeline Diagram
 
@@ -17,7 +41,8 @@ The pipeline automates the full journey from a code change to a live deployment,
      * Job 3: Deploy to EC2 (CD)
 * The application is deployed to a live EC2 instance
 
-This separation ensures quality, safety, and reliability at every stage.
+This separation ensures each stage has a clear responsibility,
+reducing risk while improving reliability.
 
 ### Why This CI/CD Pipeline Was Set Up
 This setup was created to prepare the application for a real-world CI/CD workflow.
@@ -58,7 +83,7 @@ Large or sensitive files are excluded, keeping the repository:
 * Secure
 * Easy to maintain
 
-1. Early Detection of Problems: 
+2. Early Detection of Problems: 
 Automated tests run before any merge or deployment.
 
 This allows issues to be caught early, before broken code reaches production.
@@ -109,7 +134,9 @@ This pipeline demonstrates practical skills in:
 ### Overview
 * Job 3 is the Continuous Deployment stage of the pipeline.
 * Its purpose is to deliver a version of the application that is already known to work into the live environment safely and reliably.
-* Job 3 does not test or merge code — it only deploys approved changes.
+* Job 3 is responsible only for delivery.
+By the time this stage runs, the code has already been tested and approved.
+This ensures that only safe, verified updates ever reach the live environment.
 
 
 #### What Job 3 Does
@@ -141,34 +168,10 @@ This separation ensures delivery is safe and controlled.
 This keeps the live environment stable and protected.
 
 #### Evidence of Successful Deployment
-### Jenkins Console Output (Job 3)
+Detailed console output, deployment screenshots, and confirmation of live application changes
+are documented in the Job 3 Continuous Deployment file:
 
-![alt text](<image/job3image6 - Copy.png>)
-
-The console output confirms:
-   * SSH agent started successfully
-   * Correct EC2 credentials were used
-   * Deployment commands ran without errors
-
-#### Live Application Running
-After deployment, the application is accessible via the EC2 public IP on port 3000.
-
-![alt text](<image/job3image12 - Copy.png>)
-
-##### The page displays:
-   “Welcome to the Sparta Test App”
-   “The app is running correctly.”
-
-#### Testing Deployment Reliability
-To ensure reliability, I tested the deployment process multiple times.
-  Each time:
-   * A change was made on the dev branch
-  * The pipeline triggered automatically
-  * Jenkins redeployed the application
-  * The updated content appeared on the live front page
-
-The final screenshot represents the confirmed deployed state after multiple successful redeployments.
-
+➡️ [View Job 3 – Continuous Deployment Evidence](Job3-cd-deploy.md)
 
 #### Why Job 3 Matters to the Business
 Job 3 ensures that:
