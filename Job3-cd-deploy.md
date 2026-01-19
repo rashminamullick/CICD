@@ -127,6 +127,10 @@ After running the job, I checked the Console Output.
 * Commands executing without errors
 
 ![alt text](<Job3-image/console-output.png>)
+
+#### Build History on the left hand side:
+![alt text](Job3-image/build_history.png)
+
 #### This confirms that Jenkins:
 * Connected to EC2
 * Deployed the application

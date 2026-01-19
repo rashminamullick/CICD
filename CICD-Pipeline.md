@@ -142,7 +142,7 @@ This ensures that only safe, verified updates ever reach the live environment.
 
 ### Job 3:
 
-![alt text](image/job2image9.png)
+![alt text](Job3-image/browser-display.png)
 
 * Takes a tested and approved version of the application
 * Deploys it to an AWS EC2 instance
