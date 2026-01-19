@@ -9,3 +9,8 @@ Rashmina Mullick
 ### Create Main-Readme.md
 ### SSH Readme
 Explain the Benefit of CICD, Final Result of CD Deployment.
+Detailed Job Documentation
+Job 1 – Continuous Integration (CI)
+Job 2 – Merge dev → main (CI)
+Job 3 – Continuous Deployment (CD)
+SSH Authentication with GitHub
