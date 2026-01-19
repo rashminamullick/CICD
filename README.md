@@ -1,6 +1,6 @@
-# CICD
+# CICD Pipeline
 ## Author:
-Rashmina Mullick
+#### Rashmina Mullick
 
 ## Detailed of Job Documents
 ### CICD-Pipeline
