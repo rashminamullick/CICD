@@ -122,7 +122,7 @@ After making changes locally:
     * Jenkins merges dev → main
     * Jenkins pushes the updated code to GitHub
  
- ![alt text](job2-image/job2-merge.png)
+ ![alt text](job2-image/job2-status.png)
  
 #### When successful:
 * A blue circle appears next to the job
