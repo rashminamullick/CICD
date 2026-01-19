@@ -169,7 +169,7 @@ To ensure Job 1 runs automatically whenever code is pushed to the dev branch, a 
 * Confirm successful execution
 * See error messages if the build fails
 Finally, I can right-click the job and open Console Output to view success messages or errors.
-
+![alt text](Job1-image/job1-console_output.png)
  
  ### Why this is valuable:
 * It makes troubleshooting fast and transparent.
