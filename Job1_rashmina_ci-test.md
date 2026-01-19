@@ -1,3 +1,12 @@
+## Table of Contents
+- [What is Jenkins?](#what-is-jenkins)
+- [Why Job 1 Exists in the Pipeline](#why-job-1-exists-in-the-pipeline)
+- [Creating Job 1 in Jenkins](#creating-job-1-in-jenkins-step-by-step)
+- [SCM Credentials Configuration](#step-4a-configure-jenkins-scm-credentials-ssh)
+- [GitHub Webhook Configuration](#step-5a-configure-github-webhook-automatic-trigger)
+- [Build Steps – Running Automated Tests](#step-6-add-build-commands)
+- [Outcome of Job 1](#outcome-of-job-1)
+
 # What is Jenkins?
 * Jenkins is an open-source automation tool that helps test and build applications automatically.
 Instead of running tests manually, Jenkins does this work for us every time code changes, which makes the process faster, more reliable, and less error-prone.
@@ -7,7 +16,7 @@ Instead of running tests manually, Jenkins does this work for us every time code
 * Run tests automatically
 * Stop the pipeline if something is broken
 
-### Why Job 1 Exists in the Pipeline
+## Why Job 1 Exists in the Pipeline
 
 Only allow tested, working code to move forward.
 * Broken code never reaches production
@@ -131,12 +140,8 @@ To ensure Job 1 runs automatically whenever code is pushed to the dev branch, a 
 
 ### Build Steps – Running Automated Tests
 ## Step 6: Add Build Commands
-* Under Build Steps, I selected Execute shell and added:
+* Under Build Steps, I selected Execute shell and added code as per the screenshot:
   
-cd app
-npm install
-npm test
-
 ![alt text](Job1-image/job1-build_steps.png)
 
 ### What this does?:
@@ -152,6 +157,7 @@ npm test
 ## Step 7: Build the Job
 * After the job has been created, on the left hand side click Build now to run the job.
 * Jenkins runs the job automatically
+
 ![alt text](Job1-image/job1-ci_test.png)
 
 ## Step 8: Checking the Results

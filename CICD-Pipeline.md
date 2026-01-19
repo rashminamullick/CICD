@@ -11,12 +11,12 @@ This repository contains detailed documentation for each stage of the CI/CD pipe
 - [Job 3 – Continuous Deployment](#job-3--continuous-deployment-cd)
 - [Conclusion](#conclusion)
 
+### Detailed Job Documentation
 
 - [Job 1 – Continuous Integration (CI)](Job1_rashmina_ci-test.md)
 - [Job 2 – Merge dev → main (CI)](Job2-ci-merge.md)
 - [Job 3 – Continuous Deployment (CD)](Job3-cd-deploy.md)
 - [SSH Authentication with GitHub](SSHReadme.MD)
-
 
 ### CI/CD Pipeline – Jenkins, GitHub & AWS EC2
 #### Overview
@@ -25,7 +25,6 @@ The pipeline automates the full journey from a code change to a live deployment,
 
 ### This README provides a high-level overview of the CI/CD pipeline. 
 Detailed configuration steps, commands, and screenshots are documented in the individual Job Markdown files linked above.
-
 
 ### CI/CD Pipeline Diagram
 

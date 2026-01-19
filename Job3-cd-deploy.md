@@ -1,6 +1,15 @@
-# Job 3 – Continuous Deployment (CD): Deploying the Application to AWS EC2
+## Table of Contents
+- [Purpose of Job 3](#purpose-of-job-3)
+- [Creating Job 3](#creating-job-3--cd-deploy-job)
+- [Preparing the EC2 Instance](#preparing-the-ec2-instance-for-deployment)
+- [Jenkins Credentials for EC2](#jenkins-credentials-for-ec2-access)
+- [Deploying the Application](#build-steps--deploying-the-application)
+- [Verifying Deployment](#verifying-deployment-success)
+- [Outcome of Job 3](#outcome-of-job-3)
 
-#### Purpose of Job 3
+## Job 3 – Continuous Deployment (CD): Deploying the Application to AWS EC2
+
+## Purpose of Job 3
 * Job 3 is responsible for deploying the application automatically to an AWS EC2 instance once the code has:
 * Passed all tests (Job 1 – CI Test)
 * Been successfully merged from dev to main (Job 2 – CI Merge)
@@ -82,18 +91,21 @@ In the Build Environment section of Job 3, I enabled SSH Agent and selected the 
 #### Step 6: Execute Shell – Deployment Commands
 In the Build Steps section, I selected Execute shell and added the following commands:
 
-# Copy app folder from Jenkins workspace to EC2
-> Note: The EC2 public IP is used here for demonstration. In production, this would be handled using DNS or environment variables.
+```bash
+# Deployment commands executed by Jenkins
+scp -r app ubuntu@<ec2-ip>:/home/ubuntu/
 
-scp -r -o StrictHostKeyChecking=no app ubuntu@3.255.182.14:/home/ubuntu/
-
-# SSH into EC2 and restart app
-ssh -o StrictHostKeyChecking=no ubuntu@3.255.182.14 << EOF
+ssh ubuntu@<ec2-ip> << EOF
 cd /home/ubuntu/app
 npm install
-pm2 stop all || true
-pm2 start npm --name "myapp" -- start
+pm2 restart all
 EOF
+```
+**Copy app folder from Jenkins workspace to EC2**
+
+* Note: The EC2 public IP is used here for demonstration. In production, this would be handled using DNS or environment variables.
+
+**SSH into EC2 and restart app (as shown in the screenshot):**
 
 ![alt text](<Job3-image/build_steps.png>)
 
@@ -102,7 +114,7 @@ EOF
 * Connects to the EC2 server
 * Installs dependencies
 * Stops any running instance safely
-* Restarts the app using PM2
+* Restarts the application safely using PM2
 #### This ensures a clean and consistent deployment every time.
 
 ### Verifying Deployment Success

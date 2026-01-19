@@ -1,3 +1,12 @@
+## Table of Contents
+- [Job 2 Overview](#job-2--continuous-integration-merge-dev--main)
+- [Creating Job 2](#creating-job-2--ci-merge-job)
+- [Source Code Management](#source-code-management-github-integration)
+- [Merge Configuration](#merge-dev-to-main-configuration)
+- [Build Triggers](#build-triggers--controlled-pipeline-flow)
+- [Post-Build Actions](#post-build-actions--push-only-if-successful)
+- [Outcome of Job 2](#outcome-of-job-2)
+
 ## Job 2 – Continuous Integration (Merge dev → main)
 * “Merges tested code from the dev branch into the main branch.”
 
@@ -44,7 +53,7 @@
 * Jenkins checks out the dev branch
 * Approved changes are merged into the main branch
 
-#### Using SSH allows Jenkins to securely interact with GitHub without passwords.
+#### Using SSH allows Jenkins to authenticate securely with GitHub without storing passwords or tokens in the pipeline.
 
 ### Merge Dev to Main Configuration
 #### Step 4: Enable Merge Before Build
@@ -74,12 +83,16 @@
 
 “rashmina-jenkins-2-github-key (to read/write to repo)”
 ![alt text](job2-image/job2-build_environment.png)
-  
+
+Note: In this job, the SSH Agent was enabled to ensure Jenkins had access to the correct SSH key.
+However, when using Git Publisher, authentication can also be handled directly by Jenkins credentials.
+The SSH Agent was included here for clarity and consistency with repository access.
+
  #### This gives Jenkins permission to push the merged code back to GitHub. 
 
  ### Post-Build Actions – Push Only If Successful
 #### Step 7: Configure Git Publisher
-###### In Post-build Actions:
+#### In Post-build Actions:
 * Selected Git Publisher
 * Enabled:
      * Push Only If Build Succeeds
@@ -110,6 +123,7 @@ After making changes locally:
     * Jenkins pushes the updated code to GitHub
  
  ![alt text](job2-image/job2-merge.png)
+ 
 #### When successful:
 * A blue circle appears next to the job
 * Console output confirms a successful merge 
